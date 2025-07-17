@@ -11,7 +11,6 @@ def escolher_jogos():
     for i, jogo in enumerate(jogos, start=1):
         padrao(f'{i}. {jogo}')
     padrao('0. Voltar ao menu')
-    padrao('00. Sair do programa')
     try:
         escolha_jogo = int(pergunta('Digite o número do jogo escolhido: '))
         print()
@@ -28,18 +27,31 @@ def escolher_jogos():
     except ValueError:
         erro('Entrada inválida, por favor insira um número.')
         return escolher_jogos()
-    print('---fim [Jogar]---')
+    print('<fim [Jogar]')
 
 # Jogo Mega
 def mega():
     qtd_numeros = 6
+    limite_numeros = 60
     numeros = []
-    padrao('')
-
-    padrao('00. Sair do programa')
-
-    print('Iniciando o jogo Mega...')
-
+    padrao(f'Escolha {qtd_numeros} números entre 1 e {limite_numeros}:')
+    for i in range(qtd_numeros):
+        while True:
+            try:
+                print()
+                padrao(f'Números escolhidos: {numeros}')
+                numero = int(pergunta(f'Digite o {i + 1}° número: '))
+                if numero in numeros:
+                    aviso(f'Número {numero} já foi escolhido, escolha outro.')
+                elif numero < 1 or numero > limite_numeros:
+                    aviso(f'Número {numero} fora do intervalo. Escolha um número entre 1 e {limite_numeros}.')
+                else:
+                    numeros.append(numero)
+                    break
+            except ValueError:
+                erro('Número inválido, tente novamente.')
+    sucesso('Seu jogo da Mega Sena foi confirmado!\nNúmeros escolhidos: ' + ', '.join(map(str, sorted(numeros))))
+    print('<fim [Mega]')
 
 
 # Jogo Quina
@@ -55,10 +67,13 @@ while True:
     padrao('1. Jogar')
     padrao('2. Opção 2')
     padrao('0. Sair')
+    print()
+    padrao('00. Para sair em qualquer tela!')
+    print()
 
     try:
         escolha = int(pergunta('Escolha uma opção: '))
-        print('---fim [Menu]---')
+        print('<fim [Menu]')
         print() 
     except ValueError:
         erro('Entrada inválida, por favor insira um número.')
