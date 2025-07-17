@@ -4,7 +4,7 @@ def printc(text, color_code):
     print(f'\033[{color_code}m{text}\033[0m')
 
 def erro(text):
-    printc('\n[ERRO] ' + text + '\n', '91')  # Vermelho
+    printc('\n[ERRO] ' + text, '91')  # Vermelho
 
 def sucesso(text):
     printc(text, '92')  # Verde

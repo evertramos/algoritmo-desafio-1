@@ -10,7 +10,7 @@ def escolher_jogos():
     padrao('Escolha um jogo:')
     for i, jogo in enumerate(jogos, start=1):
         padrao(f'{i}. {jogo}')
-    padrao('0. Voltar ao menu')
+    padrao('0. Voltar ao Menu Principal')
     try:
         escolha_jogo = int(pergunta('Digite o número do jogo escolhido: '))
         print()
@@ -56,8 +56,8 @@ def mega():
 
     # Confirmação dos números
     aviso(f'Os números escolhidos foram: {numeros}')
-    confirmacao = pergunta('Confirma? (s/n): ')
-    if confirmacao.lower().strip() != 's':
+    confirmacao = pergunta('Confirma? (S/n) (padrão "Sim"): ')
+    if confirmacao.lower().strip() != 's' and confirmacao.lower().strip() != '':
         return mega() # Reinicia o jogo
     print()
     sucesso('Seu jogo foi confirmado!')
@@ -66,14 +66,42 @@ def mega():
 
 # Jogo Quina
 def quina():
+    # Definir variáveis do jogo
     qtd_numeros = 5
+    limite_numeros = 80
     numeros = []
-    print('Iniciando o jogo Quina...')
+
+    # Escolha dos números
+    padrao(f'Escolha {qtd_numeros} números entre 1 e {limite_numeros}:')
+    for i in range(qtd_numeros):
+        while True:
+            try:
+                print()
+                padrao(f'Números escolhidos: {numeros}')
+                numero = int(pergunta(f'Digite o {i + 1}° número: '))
+                if numero in numeros:
+                    aviso(f'Número {numero} já foi escolhido, escolha outro.')
+                elif numero < 1 or numero > limite_numeros:
+                    aviso(f'Número {numero} fora do intervalo. Escolha um número entre 1 e {limite_numeros}.')
+                else:
+                    numeros.append(numero)
+                    break
+            except ValueError:
+                erro('Número inválido, tente novamente.')
+
+    # Confirmação dos números
+    aviso(f'Os números escolhidos foram: {numeros}')
+    confirmacao = pergunta('Confirma? (S/n) (padrão "Sim"): ')
+    if confirmacao.lower().strip() != 's' and confirmacao.lower().strip() != '':
+        return quina() # Reinicia o jogo
+    print()
+    sucesso('Seu jogo foi confirmado!')
+    print('<fim [Quina]')
 
 # Menu da aplicação
 while True:
     print()
-    padrao('Menu:')
+    padrao('Menu Principal:')
     padrao('1. Jogar')
     padrao('2. Opção 2')
     padrao('0. Sair')
