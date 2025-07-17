@@ -31,9 +31,12 @@ def escolher_jogos():
 
 # Jogo Mega
 def mega():
+    # Definir variáveis do jogo
     qtd_numeros = 6
     limite_numeros = 60
     numeros = []
+
+    # Escolha dos números
     padrao(f'Escolha {qtd_numeros} números entre 1 e {limite_numeros}:')
     for i in range(qtd_numeros):
         while True:
@@ -50,7 +53,14 @@ def mega():
                     break
             except ValueError:
                 erro('Número inválido, tente novamente.')
-    sucesso('Seu jogo da Mega Sena foi confirmado!\nNúmeros escolhidos: ' + ', '.join(map(str, sorted(numeros))))
+
+    # Confirmação dos números
+    aviso(f'Os números escolhidos foram: {numeros}')
+    confirmacao = pergunta('Confirma? (s/n): ')
+    if confirmacao.lower().strip() != 's':
+        return mega() # Reinicia o jogo
+    print()
+    sucesso('Seu jogo foi confirmado!')
     print('<fim [Mega]')
 
 
